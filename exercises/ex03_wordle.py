@@ -36,11 +36,11 @@ def emojified(secret: str, guess: str) -> str:
     return result
 
 
-def input_guess(length: int) -> str:
-    """Makes sure the players input is the correct length"""
-    guess = str(input(f"Enter a {length} character word: "))
-    while len(guess) != length:
-        guess = str(input(f"That was not {length} letters! Try again: "))
+def input_guess(length: str) -> str:
+    """Makes sure the players input is the correct length."""
+    guess = str(input(f"Enter a {len(length)} character word: "))
+    while len(guess) != len(length):
+        guess = str(input(f"That was not {len(length)} chars! Try again: "))
     return guess
 
 
@@ -50,11 +50,11 @@ def main() -> None:
     turn: int = 1
     while turn < 7:
         print(f" === Turn {turn}/6 ===")
-        guess = input_guess(len(secret))
+        guess = input_guess(secret)
         print(emojified(secret, guess))
         if secret == guess:
             print(f"You won in {turn} turns!")
-            exit()
+            raise SystemExit
         turn += 1
     print("X/6 - Sorry, try again tomorrow!")
 
