@@ -3,6 +3,8 @@
 __author__ = "730502223"
 
 
+import sys
+secret: str = "codes"
 WHITE_BOX: str = "\U00002B1C"
 GREEN_BOX: str = "\U0001F7E9"
 YELLOW_BOX: str = "\U0001F7E8"
@@ -21,7 +23,7 @@ def contains_char(secret: str, char: str) -> bool:
 
 def emojified(secret: str, guess: str) -> str:
     """Returns string with the correct color boxes."""
-    assert len(secret) == len(guess)
+    assert len(guess) == len(secret)
     result: str = ""
     i: int = 0
     while i < len(secret):
@@ -46,7 +48,6 @@ def input_guess(length: str) -> str:
 
 def main() -> None:
     """The entrypoint of the program and main game loop."""
-    secret: str = "codes"
     turn: int = 1
     while turn < 7:
         print(f" === Turn {turn}/6 ===")
@@ -54,7 +55,7 @@ def main() -> None:
         print(emojified(secret, guess))
         if secret == guess:
             print(f"You won in {turn} turns!")
-            raise SystemExit
+            sys.exit()
         turn += 1
     print("X/6 - Sorry, try again tomorrow!")
 
