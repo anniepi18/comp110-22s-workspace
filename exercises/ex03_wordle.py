@@ -3,8 +3,6 @@
 __author__ = "730502223"
 
 
-import sys
-secret: str = "codes"
 WHITE_BOX: str = "\U00002B1C"
 GREEN_BOX: str = "\U0001F7E9"
 YELLOW_BOX: str = "\U0001F7E8"
@@ -27,9 +25,9 @@ def emojified(secret: str, guess: str) -> str:
     result: str = ""
     i: int = 0
     while i < len(secret):
-        if contains_char(secret, guess[i]) is False:
+        if contains_char(guess, secret[i]) is False:
             result += WHITE_BOX
-        if contains_char(secret, guess[i]) is True:
+        elif contains_char(guess, secret[i]) is True:
             if secret[i] == guess[i]:
                 result += GREEN_BOX
             else:
@@ -38,26 +36,29 @@ def emojified(secret: str, guess: str) -> str:
     return result
 
 
-def input_guess(length: str) -> str:
+def input_guess(length: int) -> str:
     """Makes sure the players input is the correct length."""
-    guess = str(input(f"Enter a {len(length)} character word: "))
-    while len(guess) != len(length):
-        guess = str(input(f"That was not {len(length)} chars! Try again: "))
+    guess = str(input(f"Enter a {length} character word: "))
+    while len(guess) != length:
+        guess = str(input(f"That wasn't {length} chars! Try again: "))
     return guess
 
 
 def main() -> None:
     """The entrypoint of the program and main game loop."""
     turn: int = 1
-    while turn < 7:
+    game_won: bool = False
+    secret: str = "codes"
+    while turn < 7 and not game_won:
         print(f" === Turn {turn}/6 ===")
-        guess = input_guess(secret)
+        guess = input_guess(len(secret))
         print(emojified(secret, guess))
         if secret == guess:
-            print(f"You won in {turn} turns!")
-            sys.exit()
+            print(f"You won in {turn}/6 turns!")
+            game_won = True
         turn += 1
-    print("X/6 - Sorry, try again tomorrow!")
+    if turn == 7:
+        print("X/6 - Sorry, try again tomorrow!")
 
 
 if __name__ == "__main__":
